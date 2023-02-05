@@ -40,7 +40,6 @@ function MyFavorCards() {
         const currentId = context?.userName;
 
         const res = getRequest(`users/${currentId}/favCards`);
-        console.log('No1')
 
         if (!res) return
         res.then(response => response.json())
@@ -58,7 +57,7 @@ function MyFavorCards() {
                             progress: undefined,
                             theme: "colored",
                         });
-                    console.log('No2')
+                   
                     return;
 
                 }
@@ -75,11 +74,15 @@ function MyFavorCards() {
     }
 
     useEffect(getCards, []);
+    
     function delCard(card: ICardData) {
-
+       
+        const currentId = context?.userName;
         const res = daleteRequest(
-            `FavorCards/${card._id}`,
+            `users/${currentId}/favCards/${card._id}`
+         
         );
+        console.log("hello")
         if (!res) return;
 
         res.then(response => response.json())

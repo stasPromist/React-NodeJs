@@ -54,7 +54,7 @@ export const patchRequest = (endPoint: string, data: object):
     );
 }
 
-export const daleteRequest = (endPoint: string):
+export const deleteRequest = (endPoint: string):
  Promise<Response> | null => {
     return handleRequest(`${serverUrl}${endPoint}`,
         'DELETE',

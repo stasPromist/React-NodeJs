@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AppContext } from "../App";
-import { daleteRequest, getRequest } from "../services/apiService";
+import {  deleteRequest, getRequest } from "../services/apiService";
 import Title from "./Title";
 export interface ICardData {
     _id: number,
@@ -75,10 +75,10 @@ function MyFavorCards() {
 
     useEffect(getCards, []);
     
-    function delCard(card: ICardData) {
+    function delCardFavor(card: ICardData) {
        
         const currentId = context?.userName;
-        const res = daleteRequest(
+        const res = deleteRequest(
             `users/${currentId}/favCards/${card._id}`
          
         );
@@ -120,7 +120,7 @@ function MyFavorCards() {
                                     <div className="card-footer">
                                         <small className="text-muted">Last updated 3 mins ago</small>
                                         <button
-                                            onClick={() => delCard(card)}
+                                            onClick={() => delCardFavor(card)}
                                             className="btn btn-default ">
                                             <i className=" bi-trash"></i>
                                         </button>

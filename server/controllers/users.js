@@ -82,7 +82,7 @@ module.exports = {
                 email: newUser.email,
                 isBiz: newUser.isBiz,
                 isAdmin: newUser.isAdmin,
-                // arrCards: user.arrCards
+               
             })
         }
         catch (err) {
@@ -113,7 +113,7 @@ module.exports = {
                 email: user.email,
                 isBiz: user.isBiz,
                 isAdmin: user.isAdmin,
-                // arrCards: user.arrCards
+              
             });
         }
         catch (err) {
@@ -136,6 +136,7 @@ module.exports = {
             }
             console.log(req.body)
             const user = await User.findById(value.id);
+            
             if (!user || !user.isBiz) throw "Invalid user id, no such user.";
           
             if(user.favCards.length > 0) {
@@ -166,12 +167,15 @@ module.exports = {
                 console.log(error.details[0].message);
                 throw 'error get details';
             }
+           
             console.log(req.body)
-            const user = await User.findById(value.id);
+           
+            const user = await User.findOne({ _id: req.body.currentId });
+            console.log(user)
             if (!user || !user.isBiz) throw "Invalid user id, no such user.";
-          
+            console.log("here")
             if(user.favCards.length > 0) {
-                const favCards = await Card.findOneAndRemove({"_id": {"$in":user.favCards}});
+                const favCards = await Card.findOneAndRemove({ "_id ": { "$in":user.favCards ['63c9a06e7bb9d59d7224a8eb'] } });
                 res.json(favCards); 
             }
 
@@ -185,38 +189,16 @@ module.exports = {
 
 
     
-
-
-
-
     updateDetails: async function (req, res, next) {
         console.log("Hello");
         try {
             console.log(req.body)
             const user = await User.findOne({ _id: req.body.currentId });
             if (!user || !user.isBiz) throw "Not a business user";
-
-            // const schema = joi.object({
-            //     _id: joi.string().required(),
-            // });
-
-//             const { error, value } = schema.validate(req.body);
-// console.log(value.card)
-//             if (error) {
-//                 console.log(error.details[0].message);
-//                 throw `error update card`;
-//             }
             
             if(!user.favCards.includes(req.body._id)) {
                 user.favCards.push(req.body._id);
                 user.save();
-                // const updated = await User.findOneAndUpdate({
-                //     _id: value._id,
-                //     favCards: value.card._id
-                // });
-    
-                // if (!updated) throw "failed to delete";
-                // res.json(updated);
             }
            
         }

@@ -49,8 +49,8 @@ function OneCard() {
     return (
         <>
             <Title
-                main="One Card"
-                sub="Here you will find business cards"
+                main="Card details"
+                sub="Here you will find business card description"
             />
 
             <div className="card mb-3 m-5 pb-5 w-50 d-flex flex-column min-vh-50 min-vw-50">

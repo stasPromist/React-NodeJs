@@ -128,8 +128,9 @@ module.exports = {
                 description: joi.string().min(2).max(1024).required(),
                 address: joi.string().min(2).max(256).required(),
                 phone: joi.string().min(9).max(14).required(),
-                url: joi.string().min(6).max(1024),
-                alt: joi.string().min(2).max(256),
+                image:{  url: joi.string().min(6).max(1024),
+                    alt: joi.string().min(2).max(256),}
+              
             }).min(1);
 
             const { error, value } = schema.validate(req.body);

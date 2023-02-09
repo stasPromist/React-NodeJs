@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AppContext } from "../App";
-import { daleteRequest, getRequest, patchRequest } from "../services/apiService";
+import {  deleteRequest, getRequest, patchRequest } from "../services/apiService";
 
 export interface ICardData {
     _id: number,
@@ -59,7 +59,7 @@ function CardsList() {
 
     function delCard(card: ICardData) {
 
-        const res = daleteRequest(
+        const res = deleteRequest(
             `cards/${card._id}`,
         );
         if (!res) return;

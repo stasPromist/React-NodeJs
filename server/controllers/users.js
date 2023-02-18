@@ -153,33 +153,25 @@ module.exports = {
     },
 
 
-
-
     delFavCard:async function (req, res, next) {
         try {
-            const schema = joi.object({
-                id: joi.string().required(),
-            });
-
-            const { error, value } = schema.validate(req.params);
-
-            if (error) {
-                console.log(error.details[0].message);
-                throw 'error get details';
-            }
-           
             console.log(req.body)
-           
+
             const user = await User.findOne({ _id: req.body.currentId });
-            console.log(user)
+           
+           
             if (!user || !user.isBiz) throw "Invalid user id, no such user.";
-            console.log("here")
-            if(user.favCards.length > 0) {
-                const favCards = await Card.findOneAndRemove({ "_id ": { "$in":user.favCards ['63c9a06e7bb9d59d7224a8eb'] } });
-                res.json(favCards); 
+            console.log(user)
+            const index = user.favCards.indexOf(req.body._id);
+            if(index > -1) {
+                user.favCards.splice(index, 1);
+                user.save();
+            
+            };
+           
             }
 
-        } 
+        
         catch (err) {
             res.status(400).json({ error: `error get cards of a user` });
             console.log(err.message);

@@ -10,5 +10,5 @@ router.post('/signin', users.signin);
 router.post('/signup', users.signup);
 router.put('/favCards/:id', users.updateDetails);
 router.get('/:id/favCards', users.getFavCards);
-router.delete('/:id/favCards/:id', users.delFavCard);
+router.put('/delFavCards/:id', users.delFavCard);
 module.exports = router;

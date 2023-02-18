@@ -2,9 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AppContext } from "../App";
-import { setToken } from "../Auth/Token";
 import { ICardData } from "../pages/CardsList";
-import { getRequest, patchRequest, postRequest } from "../services/apiService";
+import { getRequest, patchRequest } from "../services/apiService";
 
 
 
@@ -68,7 +67,7 @@ function AllCardsList() {
 
                 cards.map(card =>
                     <div key={card._id}>
-                        <div className="mb-5">
+                        <div className="mb-5 shadow-lg p-3 mb-5 bg-body rounded">
                             <div className="col">
                                 <div className="card h-100">
                                     <img src={card.image.url} className="card-img-top" alt={card.image.alt} />

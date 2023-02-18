@@ -156,6 +156,7 @@ module.exports = {
         }
     },
 
+   
     deleteCard: async function (req, res, next) {
         try {
             const user = await User.findOne({ email: req.token.email });
@@ -171,6 +172,14 @@ module.exports = {
                 console.log(error.details[0].message);
                 throw `error delete card`;
             }
+            const allUsers = await User.find({});
+            allUsers.forEach((aUser) => {
+                const index = aUser.favCards.indexOf(value.id);
+                if(index > -1) {
+                    aUser.favCards.splice(index, 1);
+                    aUser.save();
+                }
+                });
 
             const deleted = await Card.findOneAndRemove({
                 _id: value.id,
@@ -180,11 +189,14 @@ module.exports = {
             if (!deleted) throw "failed to delete";
             res.json(deleted);
         }
+      
         
         catch (err) {
             console.log(err.message);
             res.status(400).json({ error: `error delete card` });
         }
+      
+        // })
         // const user1 = await User.findById(value.id);
         // if(user1.favCards.length > 0) {
         //     const favCards = await Card.findOneAndRemove({"_id": {"$in":user1.favCards}});

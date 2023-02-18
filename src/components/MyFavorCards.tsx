@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AppContext } from "../App";
-import {  deleteRequest, getRequest } from "../services/apiService";
+import {  deleteRequest, getRequest, patchRequest } from "../services/apiService";
 import Title from "./Title";
 export interface ICardData {
     _id: number,
@@ -61,7 +61,6 @@ function MyFavorCards() {
                     return;
 
                 }
-
                 setTitle(json.title);
                 setSubTitle(json.subTitle);
                 setDescription(json.description);
@@ -71,30 +70,29 @@ function MyFavorCards() {
                 setBizNumber(json.bizNumber);
                 setCards(json);
             })
+            
     }
 
     useEffect(getCards, []);
     
+
     function delCardFavor(card: ICardData) {
-       
-        const currentId = context?.userName;
-        const res = deleteRequest(
-            `users/${currentId}/favCards/${card._id}`
+        const res = patchRequest(`users/delFavCards/${card._id}`, {
+              ...card, currentId:context?.userName,
+        });
          
-        );
-        console.log("hello")
-        if (!res) return;
-
-        res.then(response => response.json())
-            .then(json => {
-                const updated = [...cards].filter(cardItem =>
-                    cardItem._id !== card._id
-
-                );
-                setCards(updated)
-            })
-    }
-
+           if (!res) return;
+   
+           res.then(response => response.json())
+               .then(json => {
+                   const updated = [...cards].filter(cardItem =>
+                       cardItem._id !== card._id
+   
+                   );
+                   setCards(updated);
+               })
+       }
+   
     return (
         <>
             <Title
